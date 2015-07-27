@@ -1,14 +1,14 @@
 /**
  * Created by IShAani on 27-07-2015.
  */
-public class ParkCar {
+public class Car {
 
     private String carNo;
     private String travellerName;
 
 
 
-    public  ParkCar(String carNo,String travellerName){
+    public Car(String carNo, String travellerName){
         this.carNo = carNo;
         this.travellerName = travellerName;
     }
@@ -24,7 +24,7 @@ public class ParkCar {
 
     @Override
     public String toString() {
-        return "ParkCar{" +
+        return "Car{" +
                 "carNo='" + carNo + '\'' +
                 ", travellerName='" + travellerName + '\'' +
                 '}';
@@ -35,10 +35,10 @@ public class ParkCar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ParkCar parkCar = (ParkCar) o;
+        Car car = (Car) o;
 
-        if (!carNo.equals(parkCar.carNo)) return false;
-        return travellerName.equals(parkCar.travellerName);
+        if (!carNo.equals(car.carNo)) return false;
+        return travellerName.equals(car.travellerName);
 
     }
 

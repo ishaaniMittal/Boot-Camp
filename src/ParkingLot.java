@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -8,14 +7,15 @@ import java.util.Map;
 public class ParkingLot {
 
     private int totalCapacity ;
-    private int currentCount;
-    Map<Integer,ParkCar> mapper = new HashMap<Integer,ParkCar>();
+    private int currentCount = 0;
+    Map<Integer, Car> mapper = new HashMap<Integer, Car>();
 
 
     public ParkingLot(int capacity){
         this.totalCapacity = capacity;
     }
-    public int park(ParkCar c){
+
+    public int park(Car c){
         if(mapper.containsValue(c))
             throw new CarAlreadyExistsException("Car Already Exists");
 
@@ -24,7 +24,7 @@ public class ParkingLot {
 
 
         mapper.put(currentCount,c);
-        return currentCount++;
+        return ++currentCount;
 
 
     }
@@ -36,4 +36,31 @@ public class ParkingLot {
     public int getTotalCapacity() {
         return totalCapacity;
     }
+
+
+    public int getCarToBeRemoved(int i) {
+
+        if (!mapper.containsKey(i))
+            throw new CarDoesntExistException("Car Doesnt Exist");
+        else {
+            currentCount--;
+
+
+            return currentCount;
+
+        }
+
+    }
+
+    public Car removeCar(int i){
+        if (!mapper.containsKey(i))
+            throw new CarDoesntExistException("Car Doesnt Exist");
+        else {
+            Car c = mapper.get(i);
+            mapper.remove(i);
+            return c;
+        }
+    }
+
+
 }
