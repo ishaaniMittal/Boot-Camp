@@ -22,7 +22,14 @@ public class ParkCarTest2 {
 
         ParkingLot p = new ParkingLot(2);
         p.park(new ParkCar("MH07D1123","Honda City"));
-        p.park(new ParkCar("MH07D1124","Honda CRV"));
-        p.park(new ParkCar("MH07D1125","BMW"));
+        p.park(new ParkCar("MH07D1124", "Honda CRV"));
+        p.park(new ParkCar("MH07D1125", "BMW"));
+    }
+
+    @Test(expected = CarAlreadyExistsException.class)
+    public void carAlreadyExists(){
+        ParkingLot p = new ParkingLot(2);
+        p.park(new ParkCar("MH07D1123","Honda City"));
+        p.park(new ParkCar("MH07D1123","Honda City"));
     }
 }

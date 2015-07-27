@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -8,18 +9,22 @@ public class ParkingLot {
 
     private int totalCapacity ;
     private int currentCount;
-    Map<ParkCar,Integer> mapper = new HashMap<ParkCar,Integer>();
+    Map<Integer,ParkCar> mapper = new HashMap<Integer,ParkCar>();
 
 
     public ParkingLot(int capacity){
         this.totalCapacity = capacity;
     }
     public int park(ParkCar c){
-        if(currentCount==totalCapacity){
-            throw new ParkingFullException("Parking Full"); }
+        if(mapper.containsValue(c))
+            throw new CarAlreadyExistsException("Car Already Exists");
 
-                mapper.put(c, currentCount);
-                return currentCount++;
+        if(currentCount==totalCapacity)
+            throw new ParkingFullException("Parking Full");
+
+
+        mapper.put(currentCount,c);
+        return currentCount++;
 
 
     }
