@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b5ce2553-0078-4ca4-bfc6-b45be6aef96e" name="Default" comment="">
       <change type="DELETED" beforePath="C:\Users\IShAani\IdeaProjects\Parking Lot\out\production\Parking Lot\ParkCar.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParkCarTest2.java" afterPath="$PROJECT_DIR$/src/ParkCarTest2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParkingLot.java" afterPath="$PROJECT_DIR$/src/ParkingLot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParkingLotOwner.java" afterPath="$PROJECT_DIR$/src/ParkingLotOwner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestParkingLotOwner.java" afterPath="$PROJECT_DIR$/src/TestParkingLotOwner.java" />
+      <change type="MOVED" beforePath="C:\Users\IShAani\IdeaProjects\Parking Lot\src\ParkCarTest2.java" afterPath="$PROJECT_DIR$/src/TestClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Parking Lot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParkCarTest2.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ParkCarTest2.java">
+      <file leaf-file-name="TestClass.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/TestClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8081264">
-              <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.30699775">
+              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -156,6 +154,7 @@
         <option value="$PROJECT_DIR$/src/ParkingLot.java" />
         <option value="$PROJECT_DIR$/src/TestParkingLotOwner.java" />
         <option value="$PROJECT_DIR$/src/ParkCarTest2.java" />
+        <option value="$PROJECT_DIR$/src/TestClass.java" />
       </list>
     </option>
   </component>
@@ -261,7 +260,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ParkCarTest2">
+  <component name="RunManager" selected="JUnit.TestClass">
     <configuration default="false" name="ParkCarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Parking Lot" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -282,12 +281,12 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="ParkCarTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestClass" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Parking Lot" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ParkCarTest2" />
+      <option name="MAIN_CLASS_NAME" value="TestClass" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -302,12 +301,12 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="ParkCarTest2.ableToParkCar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="TestClass.ableToParkCar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Parking Lot" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ParkCarTest2" />
+      <option name="MAIN_CLASS_NAME" value="TestClass" />
       <option name="METHOD_NAME" value="ableToParkCar" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -441,13 +440,13 @@
     </configuration>
     <list size="3">
       <item index="0" class="java.lang.String" itemvalue="JUnit.ParkCarTest" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.ParkCarTest2" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ParkCarTest2.ableToParkCar" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestClass" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestClass.ableToParkCar" />
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ParkCarTest2" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ParkCarTest2.ableToParkCar" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TestClass" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestClass.ableToParkCar" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.ParkCarTest" />
       </list>
     </recent_temporary>
@@ -485,7 +484,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30325443" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30325443" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26573938" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -596,10 +595,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ParkCarTest2.java">
+    <entry file="file://$PROJECT_DIR$/src/TestClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8081264">
-          <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.30699775">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

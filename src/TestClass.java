@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 /**
  * Created by IShAani on 27-07-2015.
  */
-public class ParkCarTest2{
+public class TestClass {
 
     ParkingLot p;
     TestParkingLotOwner TPLO = new TestParkingLotOwner();
