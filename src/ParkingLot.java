@@ -59,20 +59,19 @@ public class ParkingLot{
         else {
             Car c = mapper.get(i);
             mapper.remove(i);
+            PLO.onVacancy();
             return c;
         }
     }
 
     public boolean parkingFull(){
         if(currentCount==totalCapacity) {
-
             return true;
         }
         return false;
     }
 
-    private void notifyOwner() {
-    }
+
 
 
 }

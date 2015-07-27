@@ -67,6 +67,26 @@ public class ParkCarTest2{
 
     }
 
+    @Test
+    public void testOwnerNotifiedWhenParkingIsAvailableAgain(){
+        p.park(new Car("MH07D1125", "BMW"));
+        int count = p.getCarToBeRemoved(2);
+        assertEquals(2, count);
+        Car car = p.removeCar(2);
+        assertEquals(TPLO.isNotFull(),true);
+    }
+
+    @Test
+    public void checkIfParkingFullStatusIsGoneAfterTheParkingIsAvailable(){
+        p.park(new Car("MH07D1125", "BMW"));
+        int count = p.getCarToBeRemoved(2);
+        assertEquals(2, count);
+        Car car = p.removeCar(2);
+        assertEquals(TPLO.isFull(),false);
+    }
+
+
+
 
 
 }
