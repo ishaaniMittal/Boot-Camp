@@ -18,7 +18,7 @@ public class ParkCarTest2 {
     }
 
     @Test(expected = ParkingFullException.class)
-    public void noParking(){
+    public void testForNoParking(){
 
         ParkingLot p = new ParkingLot(2);
         p.park(new ParkCar("MH07D1123","Honda City"));
