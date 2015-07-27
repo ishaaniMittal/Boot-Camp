@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -6,15 +8,21 @@ import java.util.Map;
  */
 public class ParkingLot{
 
-    private ParkingLotOwner PLO;
+
+    private  List<ParkingLotObserver> viewers = new ArrayList<ParkingLotObserver>();
+
+
+
+   // private TestParkingLotOwner PLO;
     private int totalCapacity ;
     private int currentCount = 0;
     Map<Integer, Car> mapper = new HashMap<Integer, Car>();
 
 
-    public ParkingLot(int capacity,ParkingLotOwner PLO){
+    public ParkingLot(int capacity){
         this.totalCapacity = capacity;
-        this.PLO = PLO;
+       // this.viewers = viewers;
+
     }
 
     public int park(Car c){
@@ -27,8 +35,11 @@ public class ParkingLot{
 
         mapper.put(currentCount, c);
         ++currentCount;
-        if(parkingFull())
-            PLO.onFull();
+        if(parkingFull()) {
+
+            for(ParkingLotObserver a : viewers)
+                a.onFull();
+        }
        return currentCount;
     }
 
@@ -59,7 +70,9 @@ public class ParkingLot{
         else {
             Car c = mapper.get(i);
             mapper.remove(i);
-            PLO.onVacancy();
+
+            for(ParkingLotObserver a : viewers)
+                a.onVacancy();
             return c;
         }
     }
@@ -71,7 +84,11 @@ public class ParkingLot{
         return false;
     }
 
+    public void register(ParkingLotObserver obv){
+        viewers.add(obv);
+    }
 
+    public void unregister(ParkingLotObserver obv){ viewers.remove(obv);}
 
 
 }

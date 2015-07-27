@@ -1,15 +1,17 @@
 /**
  * Created by IShAani on 27-07-2015.
  */
-public class TestParkingLotOwner implements ParkingLotObserver {
-
+public class TestFBIAgent implements ParkingLotObserver {
 
     private String name;
 
-    public TestParkingLotOwner(String name){
+    public TestFBIAgent(String name){
         this.name = name;
+
     }
-   private boolean full = false;
+
+
+    private boolean full = false;
     private boolean notFull = false;
 
     @Override
@@ -26,12 +28,11 @@ public class TestParkingLotOwner implements ParkingLotObserver {
     public void onFull() {
         full = true;
         notFull = false;
-
     }
 
     @Override
     public void onVacancy() {
-        notFull = true;
         full = false;
+        notFull = true;
     }
 }
