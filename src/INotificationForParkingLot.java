@@ -5,4 +5,5 @@ public interface INotificationForParkingLot {
 
     public int getCapacity();
     public int getCurrentOccupancy();
+    public String getLotName();
 }

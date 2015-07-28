@@ -5,11 +5,13 @@ public class NotificationForPark implements INotificationForParkingLot {
 
     private int currentOccupancy;
     private int capacity;
+    private String lotName;
 
 
-    public NotificationForPark(int currentOccupancy, int capacity) {
+    public NotificationForPark(int currentOccupancy, int capacity,String lotName) {
         this.currentOccupancy = currentOccupancy;
         this.capacity = capacity;
+        this.lotName = lotName;
     }
 
     @Override
@@ -20,5 +22,10 @@ public class NotificationForPark implements INotificationForParkingLot {
     @Override
     public int getCurrentOccupancy() {
         return this.currentOccupancy;
+    }
+
+    @Override
+    public String getLotName() {
+        return lotName;
     }
 }

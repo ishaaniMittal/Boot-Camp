@@ -5,6 +5,12 @@ import java.util.*;
  */
 public class ParkingLot{
 
+    private String name;
+
+
+    public String getName() {
+        return name;
+    }
 
     private  List<ParkingLotObserver> observers = new ArrayList<ParkingLotObserver>();
     Map<ParkingLotObserver, SubscriberStrategy> strategyMap = new HashMap<>();
@@ -16,7 +22,8 @@ public class ParkingLot{
     Map<Integer, Car> mapper = new HashMap<Integer, Car>();
 
 
-    public ParkingLot(int capacity,ParkingLotObserver owner){
+    public ParkingLot(String name,int capacity,ParkingLotObserver owner){
+        this.name = name;
         this.totalCapacity = capacity;
         subscribe(owner, new SubscriberStrategy() {
             @Override
@@ -49,7 +56,7 @@ public class ParkingLot{
     else {
             mapper.put(currentCount, c);
             ++currentCount;
-            this.notifyObserver(new NotificationForPark(this.mapper.size(), this.totalCapacity));
+            this.notifyObserver(new NotificationForPark(this.mapper.size(), this.totalCapacity,this.name));
             return currentCount;
         }
     }
@@ -79,7 +86,7 @@ public class ParkingLot{
         if (!mapper.containsKey(i))
             throw new CarDoesntExistException("Car Doesnt Exist");
         else {
-             this.notifyObserver(new NotificationForUnpark(this.mapper.size(), this.totalCapacity));
+             this.notifyObserver(new NotificationForUnpark(this.mapper.size(), this.totalCapacity,this.name));
 
             Car c = mapper.get(i);
             mapper.remove(i);
@@ -109,7 +116,7 @@ public class ParkingLot{
     public void notifyObserver(INotificationForParkingLot notification){
         Iterator var2 = this.strategyMap.keySet().iterator();
         while(var2.hasNext()) {
-            TestParkingLotObserver observer = (TestParkingLotObserver)var2.next();
+            ParkingLotObserver observer = (ParkingLotObserver)var2.next();
             if(((SubscriberStrategy)this.strategyMap.get(observer)).apply(notification)) {
                 observer.notify(notification);
             }

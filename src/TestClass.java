@@ -14,19 +14,52 @@ import static org.junit.Assert.*;
 
 public class TestClass {
 
-    ParkingLot p;
+    ParkingLot p,p2,p3;
     private  List<ParkingLotObserver> observers = new ArrayList<ParkingLotObserver>();
     List<TestParkingLotObserver> viewers = new ArrayList<>();
     TestParkingLotObserver owner = new TestParkingLotObserver();
     TestParkingLotObserver agent = new TestParkingLotObserver();
     TestParkingLotObserver agent2 = new TestParkingLotObserver();
 
+    List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+
+    SubscriberStrategy strategy = new SubscriberStrategy() {
+        @Override
+        public boolean apply(INotificationForParkingLot notification) {
+            if (notification instanceof NotificationForPark) {
+                NotificationForPark notfn = (NotificationForPark) notification;
+                if (notfn.getCapacity() == notfn.getCurrentOccupancy())
+                    return true;
+            } else if (notification instanceof NotificationForUnpark) {
+                NotificationForUnpark notfn = (NotificationForUnpark) notification;
+                if (notfn.getCurrentOccupancy() == notfn.getCapacity() - 1)
+                    return true;
+
+            }
+            return false;
+        }
+    };
+
 
     @Before
     public void setUp(){
 
 
-        p = new ParkingLot(5,owner);
+        p = new ParkingLot("lot1",5,owner);
+        p2 = new ParkingLot("lot2" ,5,owner);
+        p3 = new ParkingLot("lot3",5,owner);
+
+        parkingLots.add(p);
+        parkingLots.add(p2);
+        parkingLots.add(p3);
+        Attendant attendant = new Attendant(parkingLots);
+
+
+
+        p.subscribe(attendant, strategy);
+        p2.subscribe(attendant,strategy);
+        p3.subscribe(attendant,strategy);
+
 
         p.subscribe(agent, new SubscriberStrategy() {
             @Override
@@ -111,7 +144,7 @@ public class TestClass {
 
     }
 
-   /* @Test
+    @Test
     public void TestIfMultipleObserversAreNotified() {
         p.park(new Car("MH12D1234","FIGO"));
         p.park(new Car("MH12D1236", "Swift"));
@@ -119,9 +152,9 @@ public class TestClass {
         p.removeCar(4);
         p.removeCar(3);
         org.junit.Assert.assertTrue(agent.isNotificationHandlerCalled());
-        org.junit.Assert.assertTrue(agent2.isNotificationHandlerCalled());
-       // org.junit.Assert.assertTrue(fbi3.isNotificationHandlerCalled());
-    }*/
+        //org.junit.Assert.assertTrue(agent2.isNotificationHandlerCalled());
+
+    }
 
 
 
