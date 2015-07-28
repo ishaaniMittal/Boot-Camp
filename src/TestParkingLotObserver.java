@@ -3,13 +3,18 @@
  */
 public class TestParkingLotObserver implements ParkingLotObserver {
 
-    NotificationTypesForObserver notify = null;
+    private boolean notify = false;
+
+
 
     @Override
-    public void notify(NotificationTypesForObserver notification) {
-
-      this.notify = notification;
-
+    public void notify(INotificationForParkingLot notification) {
+        this.notify = true;
 
     }
+
+    public boolean isNotificationHandlerCalled(){
+        return notify;
+    }
+
 }

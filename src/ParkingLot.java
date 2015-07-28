@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IShAani on 27-07-2015.
@@ -10,7 +7,7 @@ public class ParkingLot{
 
 
     private  List<ParkingLotObserver> observers = new ArrayList<ParkingLotObserver>();
-
+    Map<ParkingLotObserver, SubscriberStrategy> strategyMap = new HashMap<>();
 
 
    // private TestParkingLotOwner PLO;
@@ -21,7 +18,23 @@ public class ParkingLot{
 
     public ParkingLot(int capacity,ParkingLotObserver owner){
         this.totalCapacity = capacity;
-        subscribe(owner);
+        subscribe(owner, new SubscriberStrategy() {
+            @Override
+            public boolean apply(INotificationForParkingLot notification) {
+
+                if (notification instanceof NotificationForPark) {
+                    NotificationForPark notfn = (NotificationForPark) notification;
+                    if (notfn.getCapacity() == notfn.getCurrentOccupancy())
+                        return true;
+                } else if (notification instanceof NotificationForUnpark) {
+                    NotificationForUnpark notfn = (NotificationForUnpark) notification;
+                    if (notfn.getCurrentOccupancy() == notfn.getCapacity() - 1)
+                        return true;
+
+                }
+                return false;
+            }
+        });
 
 
     }
@@ -30,18 +43,15 @@ public class ParkingLot{
         if(mapper.containsValue(c))
             throw new CarAlreadyExistsException("Car Already Exists");
 
-       if(parkingFull()){
+       else if(parkingFull()){
            throw new ParkingFullException("Parking is FUll");
        }
-
-        mapper.put(currentCount, c);
-        ++currentCount;
-        if(parkingFull()) {
-
-            for(ParkingLotObserver a : observers)
-                a.notify(NotificationTypesForObserver.PARKING_FULL);
+    else {
+            mapper.put(currentCount, c);
+            ++currentCount;
+            this.notifyObserver(new NotificationForPark(this.mapper.size(), this.totalCapacity));
+            return currentCount;
         }
-       return currentCount;
     }
 
     public int getCurrentCount() {
@@ -69,11 +79,8 @@ public class ParkingLot{
         if (!mapper.containsKey(i))
             throw new CarDoesntExistException("Car Doesnt Exist");
         else {
+             this.notifyObserver(new NotificationForUnpark(this.mapper.size(), this.totalCapacity));
 
-            if(parkingFull()) {
-               for (ParkingLotObserver a : observers)
-                    a.notify(NotificationTypesForObserver.PARKING_AVAILABLE);
-            }
             Car c = mapper.get(i);
             mapper.remove(i);
             currentCount--;
@@ -88,17 +95,25 @@ public class ParkingLot{
         return false;
     }
 
-    public void subscribe(ParkingLotObserver obv){
+    public void subscribe(ParkingLotObserver obv, SubscriberStrategy s){
         observers.add(obv);
+        strategyMap.put(obv,s);
     }
 
-    public void unregister(ParkingLotObserver obv){ observers.remove(obv);}
+    public void unregister(ParkingLotObserver obv){
+        observers.remove(obv);
+        strategyMap.remove(obv);
+    }
 
 
-    public void notifyFBIWhen80PercentFull(){
-        if(currentCount>0.8*totalCapacity)
-            for(ParkingLotObserver a: observers)
-                a.notify(NotificationTypesForObserver.PARKING_80FULL);
+    public void notifyObserver(INotificationForParkingLot notification){
+        Iterator var2 = this.strategyMap.keySet().iterator();
+        while(var2.hasNext()) {
+            TestParkingLotObserver observer = (TestParkingLotObserver)var2.next();
+            if(((SubscriberStrategy)this.strategyMap.get(observer)).apply(notification)) {
+                observer.notify(notification);
+            }
+        }
     }
 
 }

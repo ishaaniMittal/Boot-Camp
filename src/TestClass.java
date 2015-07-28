@@ -1,3 +1,4 @@
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,10 +15,12 @@ import static org.junit.Assert.*;
 public class TestClass {
 
     ParkingLot p;
+    private  List<ParkingLotObserver> observers = new ArrayList<ParkingLotObserver>();
     List<TestParkingLotObserver> viewers = new ArrayList<>();
     TestParkingLotObserver owner = new TestParkingLotObserver();
     TestParkingLotObserver agent = new TestParkingLotObserver();
     TestParkingLotObserver agent2 = new TestParkingLotObserver();
+
 
     @Before
     public void setUp(){
@@ -25,10 +28,31 @@ public class TestClass {
 
         p = new ParkingLot(5,owner);
 
-        p.subscribe(agent);
-        p.subscribe(agent2);
+        p.subscribe(agent, new SubscriberStrategy() {
+            @Override
+            public boolean apply(INotificationForParkingLot notification) {
+                if(notification instanceof NotificationForPark) {
+                    NotificationForPark notfn = (NotificationForPark)notification;
+                    if((double)notfn.getCurrentOccupancy() / (double)notfn.getCapacity() == 0.8D) {
+                        return true;
+                    }
+                }
+
+                if(notification instanceof NotificationForUnpark) {
+                    NotificationForUnpark notfn1 = (NotificationForUnpark)notification;
+                    if((double)notfn1.getCurrentOccupancy() / (double)notfn1.getCapacity() == 0.8D) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+        });
+
         Car c = new Car("MH07D1123","Honda City");
         Car c2 = new Car("MH07D1124","Honda CRV");
+
         p.park(c);
         p.park(c2);
 
@@ -69,63 +93,39 @@ public class TestClass {
     }
 
 
-   /* @Test
-    public void testOwnerNotifiedWhenParkingIsFull(){
-        p.park(new Car("MH07D1125", "BMW"));
-        assertEquals(owner.isFull(), false);
-        p.park(new Car("MH07D1126", "BMW"));
-        assertEquals(owner.isFull(), false);
-        p.park(new Car("MH08D1120", "Toyota Camry"));
-        assertEquals(owner.isFull(), true);
-    }
-
-    @Test
-    public void testOwnerNotifiedWhenParkingIsAvailableAgain(){
-        p.park(new Car("MH07D1125", "BMW"));
-        int count = p.getCarToBeRemoved(2);
-        assertEquals(2, count);
-        Car car = p.removeCar(2);
-        assertEquals(owner.isNotFull(),true);
-    }
-
-    @Test
-    public void checkIfParkingFullStatusIsGoneAfterTheParkingIsAvailable(){
-        p.park(new Car("MH07D1125", "BMW"));
-        int count = p.getCarToBeRemoved(2);
-        assertEquals(2, count);
-        Car car = p.removeCar(2);
-        assertEquals(owner.isFull(),false);
-    }*/
-
-
-    @Test
-    public void testObserverNotifiedWhenParkingIsFull(){
-        p.park(new Car("MH07D1125", "BMW"));
-        p.park(new Car("MH07D1126", "BMW"));
-        p.park(new Car("MH08D1120", "Toyota Camry"));
-        assertEquals(NotificationTypesForObserver.PARKING_FULL, agent.notify);
-        assertEquals(NotificationTypesForObserver.PARKING_FULL, agent2.notify);
-        assertEquals(NotificationTypesForObserver.PARKING_FULL, owner.notify);
-    }
-
-
     @Test
     public void testObserverNotifiedWhenParkingIsAvailableAgain(){
         p.park(new Car("MH07D1125", "BMW"));
         p.park(new Car("MH07D1126", "BMW"));
         p.park(new Car("MH08D1120","Toyota Camry"));
         Car car = p.removeCar(2);
-        assertEquals(NotificationTypesForObserver.PARKING_AVAILABLE, owner.notify);
-        assertEquals(NotificationTypesForObserver.PARKING_AVAILABLE, agent.notify);
-        assertEquals(NotificationTypesForObserver.PARKING_AVAILABLE, agent2.notify);
-
+        assertTrue(owner.isNotificationHandlerCalled());
     }
-
 
     @Test
-    public void testAgentNotifiedAt80PercentFullParking(){
+    public void testObserverNotifiedWhenParkingIsFull(){
+        p.park(new Car("MH07D1125", "BMW"));
+        p.park(new Car("MH07D1126", "BMW"));
+        p.park(new Car("MH08D1120", "Toyota Camry"));
+        assertTrue(owner.isNotificationHandlerCalled());
 
     }
+
+   /* @Test
+    public void TestIfMultipleObserversAreNotified() {
+        p.park(new Car("MH12D1234","FIGO"));
+        p.park(new Car("MH12D1236", "Swift"));
+        p.park(new Car("MH12D1239", "Verna"));
+        p.removeCar(4);
+        p.removeCar(3);
+        org.junit.Assert.assertTrue(agent.isNotificationHandlerCalled());
+        org.junit.Assert.assertTrue(agent2.isNotificationHandlerCalled());
+       // org.junit.Assert.assertTrue(fbi3.isNotificationHandlerCalled());
+    }*/
+
+
+
+
 
 
 }
