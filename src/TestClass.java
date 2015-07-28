@@ -14,10 +14,10 @@ import static org.junit.Assert.*;
 public class TestClass {
 
     ParkingLot p;
-    List<TestParkingLotObserver> viewers = new ArrayList<TestParkingLotObserver>();
-    TestParkingLotOwner owner = new TestParkingLotOwner("ishaani");
-    TestFBIAgent agent = new TestFBIAgent("FBI 1");
-    TestFBIAgent agent2 = new TestFBIAgent("FBI 2");
+    List<TestParkingLotObserver> viewers = new ArrayList<>();
+    TestParkingLotObserver owner = new TestParkingLotObserver();
+    TestParkingLotObserver agent = new TestParkingLotObserver();
+    TestParkingLotObserver agent2 = new TestParkingLotObserver();
 
     @Before
     public void setUp(){
@@ -58,8 +58,6 @@ public class TestClass {
     @Test
     public void removeCarWhenExists(){
         p.park(new Car("MH07D1125", "BMW"));
-        int count = p.getCarToBeRemoved(2);
-        assertEquals(2, count);
         Car car = p.removeCar(2);
 
     }
@@ -71,7 +69,7 @@ public class TestClass {
     }
 
 
-    @Test
+   /* @Test
     public void testOwnerNotifiedWhenParkingIsFull(){
         p.park(new Car("MH07D1125", "BMW"));
         assertEquals(owner.isFull(), false);
@@ -97,44 +95,37 @@ public class TestClass {
         assertEquals(2, count);
         Car car = p.removeCar(2);
         assertEquals(owner.isFull(),false);
-    }
+    }*/
 
 
     @Test
     public void testObserverNotifiedWhenParkingIsFull(){
         p.park(new Car("MH07D1125", "BMW"));
-        for(TestParkingLotObserver observer: viewers)
-        assertEquals(false, observer.isFull());
-
         p.park(new Car("MH07D1126", "BMW"));
-        for(TestParkingLotObserver observer: viewers)
-            assertEquals(false,observer.isFull());
-
         p.park(new Car("MH08D1120", "Toyota Camry"));
-        for(TestParkingLotObserver observer: viewers)
-            assertEquals(true,observer.isFull());
+        assertEquals(NotificationTypesForObserver.PARKING_FULL, agent.notify);
+        assertEquals(NotificationTypesForObserver.PARKING_FULL, agent2.notify);
+        assertEquals(NotificationTypesForObserver.PARKING_FULL, owner.notify);
     }
 
 
     @Test
     public void testObserverNotifiedWhenParkingIsAvailableAgain(){
         p.park(new Car("MH07D1125", "BMW"));
-        int count = p.getCarToBeRemoved(2);
-        assertEquals(2, count);
+        p.park(new Car("MH07D1126", "BMW"));
+        p.park(new Car("MH08D1120","Toyota Camry"));
         Car car = p.removeCar(2);
-        for(TestParkingLotObserver observer: viewers)
-        assertEquals(observer.isNotFull(), true);
+        assertEquals(NotificationTypesForObserver.PARKING_AVAILABLE, owner.notify);
+        assertEquals(NotificationTypesForObserver.PARKING_AVAILABLE, agent.notify);
+        assertEquals(NotificationTypesForObserver.PARKING_AVAILABLE, agent2.notify);
+
     }
 
 
     @Test
-    public void checkIfParkingFullStatusIsGoneForObserverAfterTheParkingIsAvailable(){
-        p.park(new Car("MH07D1125", "BMW"));
-        int count = p.getCarToBeRemoved(2);
-        assertEquals(2, count);
-        Car car = p.removeCar(2);
-        for(TestParkingLotObserver observer: viewers)
-        assertEquals(observer.isFull(),false);
+    public void testAgentNotifiedAt80PercentFullParking(){
+
     }
+
 
 }

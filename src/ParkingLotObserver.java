@@ -3,7 +3,5 @@
  */
 public interface ParkingLotObserver {
 
-
-  public void onFull();
-    public void onVacancy();
+    public void notify(NotificationTypesForObserver notification);
 }
