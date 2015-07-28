@@ -1,7 +1,7 @@
 /**
  * Created by IShAani on 27-07-2015.
  */
-public class TestParkingLotOwner implements ParkingLotObserver {
+public class TestParkingLotOwner extends TestParkingLotObserver {
 
 
     private String name;

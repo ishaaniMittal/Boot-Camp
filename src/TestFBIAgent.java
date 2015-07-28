@@ -1,7 +1,7 @@
 /**
  * Created by IShAani on 27-07-2015.
  */
-public class TestFBIAgent implements ParkingLotObserver {
+public class TestFBIAgent extends TestParkingLotObserver {
 
     private String name;
 
@@ -9,7 +9,6 @@ public class TestFBIAgent implements ParkingLotObserver {
         this.name = name;
 
     }
-
 
     private boolean full = false;
     private boolean notFull = false;

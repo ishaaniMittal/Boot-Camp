@@ -8,12 +8,12 @@ public class ParkingLotOwner implements ParkingLotObserver{
         this.name = name;
     }
 
-    @Override
+
     public boolean isFull() {
         return false;
     }
 
-    @Override
+
     public boolean isNotFull() {
         return false;
     }

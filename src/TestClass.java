@@ -1,7 +1,5 @@
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +14,19 @@ import static org.junit.Assert.*;
 public class TestClass {
 
     ParkingLot p;
-    List<ParkingLotObserver> viewer = new ArrayList<ParkingLotObserver>();
+    List<TestParkingLotObserver> viewers = new ArrayList<TestParkingLotObserver>();
     TestParkingLotOwner owner = new TestParkingLotOwner("ishaani");
     TestFBIAgent agent = new TestFBIAgent("FBI 1");
     TestFBIAgent agent2 = new TestFBIAgent("FBI 2");
-    /*TestFBIAgent agent3 = new TestFBIAgent("FBI 3");
-    TestFBIAgent agent4 = new TestFBIAgent("FBI 4");
-    TestFBIAgent agent5= new TestFBIAgent("FBI 5");
-*/
-
 
     @Before
     public void setUp(){
 
 
-        p = new ParkingLot(5);
-        p.register(owner);
-        p.register(agent);
-        p.register(agent2);
+        p = new ParkingLot(5,owner);
+
+        p.subscribe(agent);
+        p.subscribe(agent2);
         Car c = new Car("MH07D1123","Honda City");
         Car c2 = new Car("MH07D1124","Honda CRV");
         p.park(c);
@@ -110,19 +103,16 @@ public class TestClass {
     @Test
     public void testObserverNotifiedWhenParkingIsFull(){
         p.park(new Car("MH07D1125", "BMW"));
-        for(ParkingLotObserver observer: viewer)
+        for(TestParkingLotObserver observer: viewers)
         assertEquals(false, observer.isFull());
 
         p.park(new Car("MH07D1126", "BMW"));
-        for(ParkingLotObserver observer: viewer)
+        for(TestParkingLotObserver observer: viewers)
             assertEquals(false,observer.isFull());
 
         p.park(new Car("MH08D1120", "Toyota Camry"));
-        for(ParkingLotObserver observer: viewer)
+        for(TestParkingLotObserver observer: viewers)
             assertEquals(true,observer.isFull());
-
-
-
     }
 
 
@@ -132,7 +122,7 @@ public class TestClass {
         int count = p.getCarToBeRemoved(2);
         assertEquals(2, count);
         Car car = p.removeCar(2);
-        for(ParkingLotObserver observer: viewer)
+        for(TestParkingLotObserver observer: viewers)
         assertEquals(observer.isNotFull(), true);
     }
 
@@ -143,7 +133,7 @@ public class TestClass {
         int count = p.getCarToBeRemoved(2);
         assertEquals(2, count);
         Car car = p.removeCar(2);
-        for(ParkingLotObserver observer: viewer)
+        for(TestParkingLotObserver observer: viewers)
         assertEquals(observer.isFull(),false);
     }
 

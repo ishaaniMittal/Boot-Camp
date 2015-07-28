@@ -4,8 +4,6 @@
 public interface ParkingLotObserver {
 
 
-    public boolean isFull();
-    public boolean isNotFull();
-    public void onFull();
+  public void onFull();
     public void onVacancy();
 }

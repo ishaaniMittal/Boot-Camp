@@ -19,8 +19,9 @@ public class ParkingLot{
     Map<Integer, Car> mapper = new HashMap<Integer, Car>();
 
 
-    public ParkingLot(int capacity){
+    public ParkingLot(int capacity,ParkingLotObserver owner){
         this.totalCapacity = capacity;
+        subscribe(owner);
        // this.viewers = viewers;
 
     }
@@ -39,6 +40,7 @@ public class ParkingLot{
 
             for(ParkingLotObserver a : viewers)
                 a.onFull();
+              //  a.notifyTheObserver(NotificationTypesForObserver.PARKING_FULL);
         }
        return currentCount;
     }
@@ -72,7 +74,9 @@ public class ParkingLot{
             mapper.remove(i);
 
             for(ParkingLotObserver a : viewers)
-                a.onVacancy();
+                    a.onVacancy();
+                //a.notifyTheObserver(NotificationTypesForObserver.PARKING_AVAILABLE);
+
             return c;
         }
     }
@@ -84,7 +88,7 @@ public class ParkingLot{
         return false;
     }
 
-    public void register(ParkingLotObserver obv){
+    public void subscribe(ParkingLotObserver obv){
         viewers.add(obv);
     }
 
