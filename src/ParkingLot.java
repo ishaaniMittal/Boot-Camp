@@ -113,6 +113,9 @@ public class ParkingLot{
     }
 
 
+    public ParkingLot(){
+
+    }
     public void notifyObserver(INotificationForParkingLot notification){
         Iterator var2 = this.strategyMap.keySet().iterator();
         while(var2.hasNext()) {
@@ -121,6 +124,10 @@ public class ParkingLot{
                 observer.notificationHandler(notification);
             }
         }
+    }
+
+    public float percentageEmpty(){
+        return (1-(float)currentCount/totalCapacity);
     }
 
 }

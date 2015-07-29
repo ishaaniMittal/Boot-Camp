@@ -5,15 +5,33 @@ import java.util.*;
  */
 public class Attendant implements ParkingLotObserver{
 
-   Map<ParkingLot,Boolean> parkingLotStatus = new HashMap<ParkingLot, Boolean>();
+    Map<ParkingLot,Boolean> parkingLotStatus = new HashMap<ParkingLot, Boolean>();
 
+   // Map<ParkingLot,Float> parkingLotEmpty = new HashMap<>();
+
+    List<ParkingLot> parkingLotList = new ArrayList<>();
+
+    private ParkingLot findMaximumEmpty(){
+        float max  = 0f;
+        ParkingLot temp = new ParkingLot();
+        for(ParkingLot p : parkingLotList) {
+            if(p.percentageEmpty() > max)
+            {
+                max = p.percentageEmpty();
+                temp = p;
+            }
+        }
+        return temp;
+    }
 
     public Attendant(List<ParkingLot> parkingLots){
         for(ParkingLot pL : parkingLots)
-            parkingLotStatus.put(pL,false);
+           parkingLotStatus.put(pL,false);
+        this.parkingLotList = parkingLots;
+
     }
 
-    public ParkingLot checkParkingLotStatus() {
+    /*public ParkingLot checkParkingLotStatus() {
 
         Iterator it = parkingLotStatus.entrySet().iterator();
         while (it.hasNext()) {
@@ -26,36 +44,39 @@ public class Attendant implements ParkingLotObserver{
         }
         return null;
     }
+*/
+    public Car unparkCar(Token token){
 
-    public Car unparkCar(String token){
 
-        String splitTokenParts[] = token.split("-");
-        String lotName = splitTokenParts[0];
-        String carToken = splitTokenParts[1];
+        String lotName = token.getParkingLotName();
+        int carToken = token.getTokenNumberInEachParkingLot();
 
-        Iterator it = parkingLotStatus.entrySet().iterator();
+        for(ParkingLot p : parkingLotList){
+            if(p.getName().equals(lotName)){
+                Car c = p.removeCar(carToken);
+                return c;
+            }
+        }
+        return null;
+         /*Iterator it = parkingLotStatus.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             ParkingLot pl = (ParkingLot)pair.getKey();
             if (pl.getName().equals(lotName)) {
-               Car c = pl.removeCar(Integer.parseInt(carToken));
+               Car c = pl.removeCar(carToken);
                 return c;
             }
 
-        }
-
-        return null;
+        }*/
     }
 
 
-    public String parkCar(Car c){
-        ParkingLot parkingLot = checkParkingLotStatus();
+    public Token parkCar(Car c){
+        ParkingLot parkingLot = findMaximumEmpty();
         int token = parkingLot.park(c);
         String lotName = parkingLot.getName();
-        String tokenString = Integer.toString(token);
-        String newToken = lotName.concat("-");
-        newToken = newToken.concat(tokenString);
-        return newToken;
+        Token tokenGenerated = new Token(lotName,token);
+        return tokenGenerated;
     }
 
 
