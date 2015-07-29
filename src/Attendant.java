@@ -60,7 +60,7 @@ public class Attendant implements ParkingLotObserver{
 
 
     @Override
-    public void notify(INotificationForParkingLot notification) {
+    public void notificationHandler(INotificationForParkingLot notification) {
         String lotName = notification.getLotName();
 
         Iterator it = parkingLotStatus.entrySet().iterator();

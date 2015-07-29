@@ -3,5 +3,5 @@
  */
 public interface ParkingLotObserver {
 
-    public void notify(INotificationForParkingLot notification);
+    public void notificationHandler(INotificationForParkingLot notification);
 }

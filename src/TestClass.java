@@ -40,27 +40,21 @@ public class TestClass {
         }
     };
 
+    Attendant attendant;
 
     @Before
     public void setUp(){
 
-
         p = new ParkingLot("lot1",5,owner);
         p2 = new ParkingLot("lot2" ,5,owner);
         p3 = new ParkingLot("lot3",5,owner);
-
         parkingLots.add(p);
         parkingLots.add(p2);
         parkingLots.add(p3);
-        Attendant attendant = new Attendant(parkingLots);
-
-
-
+        attendant = new Attendant(parkingLots);
         p.subscribe(attendant, strategy);
         p2.subscribe(attendant,strategy);
         p3.subscribe(attendant,strategy);
-
-
         p.subscribe(agent, new SubscriberStrategy() {
             @Override
             public boolean apply(INotificationForParkingLot notification) {
@@ -82,15 +76,21 @@ public class TestClass {
             }
 
         });
-
         Car c = new Car("MH07D1123","Honda City");
         Car c2 = new Car("MH07D1124","Honda CRV");
-
         p.park(c);
         p.park(c2);
-
-
     }
+
+    @Test
+    public void TestIfAttendantIsNotifiedOnPark(){
+        p.park(new Car("MH07D1125", "BMW"));
+        p.park(new Car("MH07D1126", "BMW"));
+        p.park(new Car("MH08D1120", "Toyota Camry"));
+        assertTrue(owner.isNotificationHandlerCalled());
+    }
+
+
 
     @Test
     public void ableToParkCar() {
@@ -152,8 +152,23 @@ public class TestClass {
         p.removeCar(4);
         p.removeCar(3);
         org.junit.Assert.assertTrue(agent.isNotificationHandlerCalled());
-        //org.junit.Assert.assertTrue(agent2.isNotificationHandlerCalled());
+    }
 
+
+    @Test
+    public void attendantAbleToDirectCarForPark(){
+        p.park(new Car("MH12D1234","FIGO"));
+        p.park(new Car("MH12D1236", "Swift"));
+        p.park(new Car("MH12D1239", "Verna"));
+       assertEquals(true, attendant.parkCar(new Car("MH12D3456", "Nano")).equals("lot2-1"));
+    }
+
+    @Test
+    public void attendantAbleToUnParkTheCar(){
+        p.park(new Car("MH12D1234","FIGO"));
+        p.park(new Car("MH12D1236", "Swift"));
+        p.park(new Car("MH12D1239", "Verna"));
+        System.out.println(attendant.unparkCar("lot1-3"));
     }
 
 

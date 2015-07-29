@@ -8,7 +8,7 @@ public class TestParkingLotObserver implements ParkingLotObserver {
 
 
     @Override
-    public void notify(INotificationForParkingLot notification) {
+    public void notificationHandler(INotificationForParkingLot notification) {
         this.notify = true;
 
     }

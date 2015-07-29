@@ -118,7 +118,7 @@ public class ParkingLot{
         while(var2.hasNext()) {
             ParkingLotObserver observer = (ParkingLotObserver)var2.next();
             if(((SubscriberStrategy)this.strategyMap.get(observer)).apply(notification)) {
-                observer.notify(notification);
+                observer.notificationHandler(notification);
             }
         }
     }
